@@ -10,11 +10,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 
 
+
 public class TasksTest {
 	
 	public WebDriver acessarAplicacao() {
-		System.setProperty("webdriver.chrome.driver", "C:\\Dev\\java\\selenium\\chromedriver.exe");
+		//System.setProperty("webdriver.chrome.driver","C:\\Dev\\java\\selenium\\chromedriver.exe");
+		//ChromeOptions options = new ChromeOptions();
+		//options.addArguments("start-maximized");
 		WebDriver driver = new ChromeDriver();
+		//driver.get("https://www.google.com/");
 		driver.navigate().to("http://localhost:8080/tasks");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		return driver;
