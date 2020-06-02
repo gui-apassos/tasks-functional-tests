@@ -1,32 +1,35 @@
 package br.ce.wcaquino.tasks.functional;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 
 
 
 public class TasksTest {
 	
-	public WebDriver acessarAplicacao() {
-		//System.setProperty("webdriver.chrome.driver","C:\\Dev\\java\\selenium\\chromedriver.exe");
-		//ChromeOptions options = new ChromeOptions();
-		//options.addArguments("start-maximized");
-		WebDriver driver = new ChromeDriver();
-		//driver.get("https://www.google.com/");
-		driver.navigate().to("http://localhost:8080/tasks");
+	public WebDriver acessarAplicacao() throws MalformedURLException {
+	new DesiredCapabilities();
+		//	WebDriver driver = new ChromeDriver();
+		DesiredCapabilities cap = DesiredCapabilities.chrome();
+		WebDriver driver = new RemoteWebDriver(new URL ("http://192.168.56.1:4444/wd/hub"), cap);
+		driver.navigate().to("http://192.168.56.1:8080/tasks");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		return driver;
 	}
 	
 	
 	@Test
-	public void deveSalvarTarefacomSucesso() {
+	public void deveSalvarTarefacomSucesso() throws MalformedURLException {
         WebDriver driver = acessarAplicacao();
 		try {
 		//clicar em add
@@ -57,7 +60,7 @@ public class TasksTest {
 	}
 	
 	@Test
-	public void naodeveSalvarTarefaSemDescricao() {
+	public void naodeveSalvarTarefaSemDescricao() throws MalformedURLException {
         WebDriver driver = acessarAplicacao();
 		try {
 		//clicar em add
@@ -74,8 +77,13 @@ public class TasksTest {
 		
 		
 		//msg sucesso
-		String message = driver.findElement(By.id("message")).getText();
-		Assert.assertEquals("Fill the task description", message);
+		//String message = driver.findElement(By.id("message")).getText();
+		//Assert.assertEquals("Fill the task description", message);
+		
+		//msg sucesso
+		WebElement message = driver.findElement(By.id("message"));
+		String text = message.getText();
+		Assert.assertEquals("Fill the task description", text);
 		
 		}finally {
 		//fechar navegador
@@ -83,7 +91,7 @@ public class TasksTest {
 		}
 	}
 		@Test
-		public void naoDeveSalvarTarefasemData() {
+		public void naoDeveSalvarTarefasemData() throws MalformedURLException {
 	        WebDriver driver = acessarAplicacao();
 			try {
 			//clicar em add
@@ -109,7 +117,7 @@ public class TasksTest {
 		}
 
 		@Test
-		public void naodeveSalvarTarefacomDataPassada() {
+		public void naodeveSalvarTarefacomDataPassada() throws MalformedURLException {
 	        WebDriver driver = acessarAplicacao();
 			try {
 			//clicar em add
